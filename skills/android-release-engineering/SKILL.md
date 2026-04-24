@@ -5,35 +5,80 @@ description: Android release engineering skill for signing, rollout strategy, re
 
 # Purpose
 
-Guide reliable Android releases with operational readiness and risk control.
+Ensure safe Android production releases through readiness validation, staged rollout control, and explicit rollback policy.
+
+## Scope and authority
+
+This skill is production gate authority for:
+
+- release go/no-go decisions
+- staged rollout and monitoring guardrails
+- rollback criteria and incident gating
 
 ## When to use
 
-- Preparing release candidate builds
-- Defining staged rollout strategy
-- Validating signing/distribution readiness
-- Designing monitoring and rollback plans
+- release candidate readiness checks
+- rollout and rollback strategy decisions
+- cross-skill conflicts near production windows
 
-## Workflow
+## Decision engine workflow
 
-1. Validate release readiness checklist.
-2. Confirm signing and build integrity.
-3. Define staged rollout and guardrails.
-4. Prepare observability and incident responses.
-5. Execute go/no-go recommendation.
+1. Assess release readiness and blocker status.
+2. Validate build/signing/environment integrity.
+3. Determine rollout branch by risk profile.
+4. Define monitoring thresholds and rollback triggers.
+5. Issue go/no-go with confidence and contingency path.
 
-## Output format
+## Branching decision tree
 
-1. `Release readiness status`
-2. `Blocking and non-blocking risks`
-3. `Rollout plan`
-4. `Monitoring plan`
-5. `Rollback criteria`
-6. `Post-release checks`
+### Branch A: risk profile
+
+- `high uncertainty or elevated incident risk`:
+  - reduce rollout exposure and tighten gates
+- `stable metrics and low blast radius`:
+  - proceed with normal staged rollout
+
+### Branch B: conflict with other skills
+
+- if recommendation increases release risk beyond threshold:
+  - defer or scope-limit change until post-release window
+
+## Uncertainty protocol
+
+Always report confidence (`High`, `Medium`, `Low`).
+For medium/low confidence, provide safer fallback release options.
+
+If confidence is medium/low:
+
+- list unknowns that could alter go/no-go
+- define minimum additional signals required to proceed
+- provide a risk-reduced release plan (scope cut, slower rollout, feature-flag gating)
+
+## Output contract
+
+Follow global order from `AGENTS.md`:
+
+1. `Context and constraints`
+2. `Decision and rationale`
+3. `Alternatives considered`
+4. `Tradeoffs`
+5. `Risks and mitigations`
+6. `Confidence and unknowns`
+7. `Cross-skill impacts`
+8. `Next implementation steps`
+
+Then include release-specific artifacts:
+
+- `Release readiness status`
+- `Blocking and non-blocking risks`
+- `Rollout plan`
+- `Monitoring plan`
+- `Rollback criteria`
+- `Post-release checks`
 
 ## Anti-pattern detection
 
-- Big-bang rollout without guardrails
-- Missing crash/performance monitoring gates
-- Ambiguous rollback criteria
-- Signing/configuration drift across environments
+- big-bang rollout without staged guardrails
+- weak observability for crash/performance signals
+- ambiguous rollback triggers
+- signing or config drift across environments

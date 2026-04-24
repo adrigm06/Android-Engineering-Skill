@@ -5,55 +5,105 @@ description: Android security engineering skill for threat-aware recommendations
 
 # Purpose
 
-Provide practical Android security guidance with realistic threat awareness and implementation boundaries.
+Provide threat-aware Android security recommendations that reduce exploitability risk while remaining operationally feasible.
+
+## Scope and authority
+
+This skill has global critical override authority for:
+
+- exploitable security risk
+- sensitive data exposure pathways
+- secrets and trust-boundary handling
+
+If security risk is critical, this skill can override convenience, performance, or UX preferences.
 
 ## When to use
 
-- Handling credentials, tokens, keys, or sensitive user data
-- Hardening network communication and API trust boundaries
-- Reviewing secure storage decisions
-- Designing app integrity and tamper resistance controls
-- Security review of architecture/build/release flows
+- credentials/tokens/PII handling
+- secure storage and network hardening decisions
+- integrity/tamper-risk mitigation planning
+- security assessment of architecture/build/release changes
 
-## Principles
+## Decision engine workflow
 
-1. Minimize sensitive data exposure by design.
-2. Apply least privilege and shortest viable retention.
-3. Keep secrets out of source control and artifacts.
-4. Prefer platform-backed secure primitives over custom crypto.
-5. Align mitigations with realistic threat models and costs.
+1. Identify assets, trust boundaries, and attacker capabilities.
+2. Rank threats by exploitability and business impact.
+3. Choose mitigations by risk reduction vs operational cost.
+4. Define rollout controls and residual risk.
+5. Align with release constraints and incident readiness.
 
-## Workflow
+## Branching decision tree
 
-1. Identify assets and trust boundaries.
-2. Map likely threats and attack surfaces.
-3. Propose layered mitigations.
-4. Validate implementation feasibility and operational cost.
-5. Prioritize fixes by severity and exploitability.
-6. Produce rollout and verification checklist.
+### Branch A: risk class
 
-## Output format
+- `Critical exploitability`:
+  - block release-impacting exposure
+  - enforce immediate mitigation path
+- `High but non-blocking`:
+  - prioritize near-term remediation with guardrails
+- `Medium/Low`:
+  - schedule hardening with explicit risk acceptance notes
 
-1. `Risk summary`
-2. `Threat surfaces`
-3. `Mitigation plan`
-4. `Storage/network/integrity controls`
-5. `Residual risks`
-6. `Implementation priorities`
+### Branch B: mitigation feasibility
 
-## Rules and restrictions
+- if ideal control is operationally heavy:
+  - recommend staged mitigation plan with interim control
+- if threat model is weak/unknown:
+  - choose conservative baseline controls and request missing threat inputs
 
-- Do not suggest hardcoded secrets or token logging.
-- Do not recommend custom cryptography when platform APIs suffice.
-- Do not treat certificate pinning as universal; apply contextually.
-- Do not claim absolute client-side tamper prevention.
+## Tradeoff realism
+
+Allow constrained compromises only when explicit:
+
+- interim controls are acceptable if expiry criteria is defined
+- partial hardening is acceptable when release windows are tight and residual risk is transparent
+
+Do not frame risk acceptance as risk elimination.
+
+## Uncertainty protocol
+
+Always report confidence:
+
+- `High` (>= 0.80)
+- `Medium` (0.60-0.79)
+- `Low` (< 0.60)
+
+If confidence is medium/low:
+
+- list assumptions and missing threat intel
+- provide least-risk interim control
+- escalate to `android-release-engineering` when residual risk may block release
+- escalate to `android-architecture` when control requires structural change
+
+## Output contract
+
+Follow global order from `AGENTS.md`:
+
+1. `Context and constraints`
+2. `Decision and rationale`
+3. `Alternatives considered`
+4. `Tradeoffs`
+5. `Risks and mitigations`
+6. `Confidence and unknowns`
+7. `Cross-skill impacts`
+8. `Next implementation steps`
+
+Also include:
+
+- `Risk summary`
+- `Threat surfaces`
+- `Mitigation plan`
+- `Storage/network/integrity controls`
+- `Residual risks`
+- `Implementation priorities`
 
 ## Anti-pattern detection
 
-- Secrets in source, resources, or Gradle files
-- Plaintext local persistence of sensitive data
-- Missing TLS hardening and trust validation
-- Security checks that exist only in UI layer
+- secrets in source, resources, or build scripts
+- plaintext sensitive data persistence
+- custom crypto without strong justification
+- UI-only security checks lacking backend enforcement
+- security controls that are impractical to operate and therefore bypassed
 
 ## Related resources
 

@@ -5,36 +5,73 @@ description: Android debugging skill for root-cause analysis using hypothesis-dr
 
 # Purpose
 
-Diagnose Android issues with a repeatable, evidence-driven debugging process.
+Diagnose Android issues with hypothesis-ranked investigation, reproducible experiments, and evidence-based root-cause closure.
+
+## Scope and authority
+
+This skill is root-cause authority for incident triage and narrowing workflow.
 
 ## When to use
 
-- Intermittent crashes or inconsistent behavior
-- Environment-specific failures
-- Cross-layer bugs (UI/domain/data/build/runtime)
-- Regression introduced by recent changes
+- intermittent crashes and inconsistent behavior
+- cross-layer regressions
+- environment- or device-specific failures
 
-## Workflow
+## Decision engine workflow
 
-1. Define symptom precisely.
-2. Build reproducible scenario matrix.
-3. Generate ranked hypotheses.
-4. Add instrumentation/logging/tracing.
-5. Narrow via controlled experiments.
-6. Propose fix candidates and validation plan.
+1. Define symptom, scope, and impact.
+2. Build reproducibility matrix.
+3. Rank hypotheses by likelihood and blast radius.
+4. Add targeted instrumentation.
+5. Run narrowing experiments and update confidence per hypothesis.
+6. Propose fix candidates and verification path.
 
-## Output format
+## Branching decision tree
 
-1. `Observed symptoms`
-2. `Most likely root causes`
-3. `Reproduction strategy`
-4. `Instrumentation plan`
-5. `Narrowing experiments`
-6. `Fix candidates and verification`
+### Branch A: reproducibility state
+
+- `reproducible`:
+  - run controlled experiments and binary-search recent changes
+- `non-reproducible`:
+  - invest first in telemetry and environment narrowing before proposing fixes
+
+### Branch B: incident severity
+
+- `production-impacting`:
+  - optimize for fast containment and rollback-safe mitigation
+- `non-blocking`:
+  - optimize for high-confidence root-cause isolation before code change
+
+## Uncertainty protocol
+
+Always provide confidence per primary hypothesis.
+If confidence remains low, widen instrumentation and escalate to supporting skill by domain.
+
+## Output contract
+
+Follow global order from `AGENTS.md`:
+
+1. `Context and constraints`
+2. `Decision and rationale`
+3. `Alternatives considered`
+4. `Tradeoffs`
+5. `Risks and mitigations`
+6. `Confidence and unknowns`
+7. `Cross-skill impacts`
+8. `Next implementation steps`
+
+Then include debugging-specific artifacts:
+
+- `Observed symptoms`
+- `Most likely root causes`
+- `Reproduction strategy`
+- `Instrumentation plan`
+- `Narrowing experiments`
+- `Fix candidates and verification`
 
 ## Anti-pattern detection
 
-- Guess-based fixes without evidence
-- No reproducible scenario baseline
-- Logging noise without diagnostic intent
-- Premature refactor before root cause
+- guess-based fixes without evidence
+- no reproducible baseline
+- noisy logs without diagnostic hypothesis
+- deep refactor before root cause confirmation

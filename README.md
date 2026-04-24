@@ -1,46 +1,63 @@
 # Android Engineering Skill Package
 
-A modular, composable, open-source skill system for Android engineering tasks.
+A modular, composable, production-grade Android skill system for agentic engineering workflows.
 
-This repository is designed for agentic workflows where skills are loaded by context.
-It is intentionally structured to behave like a senior Android Staff Engineer rather than a generic coding assistant.
+This package is designed to behave like a senior Android Staff Engineer under real constraints, not like a generic checklist assistant.
 
-## Why this repository exists
+## What this is
 
-Most Android "assistant prompts" become monolithic and hard to maintain.
-This package takes a different approach:
+This repository is an open-source decision engine for Android engineering tasks:
 
-- Global engineering policy in `AGENTS.md`
-- Focused domain skills in `skills/*`
-- Reusable references, templates, and examples
-- Decision-oriented outputs with tradeoffs and risks
+- architecture and modularization
+- Compose UI system design
+- Gradle/build and CI strategy
+- testing strategy and quality confidence
+- performance, security, debugging, and release readiness
 
-## Design goals
+The system is built for multi-skill composition and deterministic conflict resolution.
 
-- Real modularity across skills
-- Clear architecture boundaries and dependency rules
-- Practical recommendations over architecture dogma
-- Open-source maintainability and contribution friendliness
-- Extensible foundation for future tooling and MCP integrations
+## Mental model
 
-## Non-goals
+Think of the package as three layers:
 
-- A single giant prompt for all Android topics
-- Framework-agnostic generic advice
-- Tooling lock-in to one CI/CD vendor
-- "One true architecture" prescriptions without context
+1. `AGENTS.md` defines runtime constraints and arbitration protocol.
+2. `skills/*/SKILL.md` defines domain execution logic and decision branches.
+3. `references/`, `templates/`, and `examples/` provide depth and reusable artifacts.
 
-## Repository layout
+This layering keeps policy stable, skills focused, and contributions maintainable.
 
-```text
-AGENTS.md                  # Always-on rules for all skills
-CONTEXT.md                 # Design contract for this package
-skills/<skill-name>/       # Specialized domain skills
-  SKILL.md                 # Triggering + workflow + output contract
-  references/              # Deep guidance and decision trees
-  templates/               # Reusable output templates
-  examples/                # Good vs bad patterns
-```
+## Why this exists
+
+Most assistant configurations collapse into one giant prompt that drifts over time.
+This package uses explicit modularity and authority boundaries to avoid that failure mode.
+
+Core goals:
+
+- internal coherence across skills
+- deterministic decisions under conflict
+- tradeoff-aware recommendations with risk visibility
+- production realism over theoretical purity
+- open-source contributor scalability
+
+## Decision engine behavior
+
+The system upgrades from "skill checklist" to "skill decision engine":
+
+- each skill branches by context, constraints, and risk
+- uncertainty is explicit via confidence levels and assumptions
+- cross-skill conflicts resolve through authority model, not prompt ordering
+- outputs follow one global contract across all domains
+
+## Cross-skill authority highlights
+
+- `android-security`: global critical override for exploitability and sensitive data risk
+- `android-architecture`: structural authority for boundaries and layering
+- `android-release-engineering`: production gate authority for go/no-go and rollback policy
+- `android-performance`: runtime authority for startup/jank/memory/ANR/battery constraints
+- `android-gradle-build`: build graph and CI authority
+- other skills provide domain execution and synthesis
+
+Full protocol is defined in `AGENTS.md`.
 
 ## Included skills
 
@@ -54,30 +71,49 @@ skills/<skill-name>/       # Specialized domain skills
 - `android-debugging`
 - `android-release-engineering`
 
-## Usage model
+## Repository layout
 
-1. Keep `AGENTS.md` loaded as passive global context.
-2. Load only the skill(s) relevant to the user task.
-3. Return structured outputs with explicit tradeoffs.
-4. Escalate to additional skills only when needed.
+```text
+AGENTS.md                  # Runtime rules, authority, conflict protocol
+CONTEXT.md                 # Product philosophy and system design intent
+skills/<skill-name>/
+  SKILL.md                 # Triggering + decision logic + output contract usage
+  references/              # Deep guidance and decision support
+  templates/               # Reusable response artifacts
+  examples/                # Good/bad pattern contrasts
+```
 
 ## Output quality baseline
 
-Every recommendation should include:
+All non-trivial outputs follow the same section order:
 
-- What to do
-- Why this choice is preferred
-- Main alternatives
-- Risks and mitigations
-- Practical next steps
+1. Context and constraints
+2. Decision and rationale
+3. Alternatives considered
+4. Tradeoffs
+5. Risks and mitigations
+6. Confidence and unknowns
+7. Cross-skill impacts
+8. Next implementation steps
+
+## Open-source readiness
+
+The repository includes:
+
+- contribution and review policy in `CONTRIBUTING.md`
+- security disclosure process in `SECURITY.md`
+- semantic changelog in `CHANGELOG.md`
+- issue templates in `.github/ISSUE_TEMPLATE/`
+
+## Evolution policy
+
+- evolve by improving decision quality and conflict determinism
+- preserve stable skill names and trigger intent unless strongly justified
+- document material behavior changes in `CHANGELOG.md`
 
 ## Contributing
 
-See `CONTRIBUTING.md` for contribution standards and review expectations.
-
-## Security
-
-See `SECURITY.md` for vulnerability reporting.
+See `CONTRIBUTING.md` for contribution standards, compatibility expectations, and review requirements.
 
 ## License
 

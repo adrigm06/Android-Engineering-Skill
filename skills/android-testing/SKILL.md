@@ -5,55 +5,109 @@ description: Android testing strategy skill for unit, integration, UI, screensho
 
 # Purpose
 
-Define realistic Android test strategies that maximize confidence while controlling cost and flakiness.
+Define risk-weighted Android testing strategy that maximizes confidence under cost, speed, and maintainability constraints.
+
+## Scope and authority
+
+This skill is lead authority for verification depth, confidence strategy, and flakiness controls.
+
+Supporting interactions:
+
+- defer production ship/no-ship to `android-release-engineering`
+- align boundary-sensitive coverage with `android-architecture`
+- coordinate runtime/perf validation with `android-performance`
 
 ## When to use
 
-- Creating or repairing test strategy for an app/module
-- Balancing test pyramid scope and ROI
-- Introducing Compose UI or screenshot tests
-- Designing benchmark and baseline profile validation
-- Improving flaky CI test pipelines
+- defining test strategy for new modules/features
+- recovering from flaky CI suites
+- selecting minimum viable coverage under deadlines
+- hardening refactor and migration confidence
 
-## Principles
+## Decision engine workflow
 
-1. Test behavior and contracts, not implementation trivia.
-2. Keep most tests fast, isolated, and deterministic.
-3. Escalate to integration/UI tests where risk justifies cost.
-4. Make performance-critical flows measurable with benchmarks.
-5. Treat flakiness as a production quality issue.
+1. Identify business-critical and failure-prone journeys.
+2. Classify risk by impact, probability, and detectability.
+3. Allocate test depth per layer by ROI.
+4. Design deterministic data and environment controls.
+5. Stage rollout and gate criteria by release risk.
 
-## Workflow
+## Branching decision tree
 
-1. Map critical user and business flows.
-2. Select test types per risk and boundary.
-3. Define deterministic data/environment strategy.
-4. Plan reliability controls for CI.
-5. Add performance-oriented tests where justified.
-6. Produce phased rollout plan.
+### Branch A: delivery context
 
-## Output format
+- `deadline-critical`:
+  - prioritize high-risk integration and contract tests
+  - defer lower-value UI coverage with explicit follow-up date
+- `stability-critical`:
+  - increase integration and failure-path depth
+  - tighten flaky-test budget and quarantine policy
 
-1. `Test pyramid recommendation`
-2. `Test boundaries by layer`
-3. `What not to test`
-4. `Flakiness risks and controls`
-5. `Performance test additions`
-6. `Implementation sequence`
+### Branch B: architecture maturity
 
-## Rules and restrictions
+- `legacy-coupled`:
+  - add characterization tests before deep refactor
+- `modular and bounded`:
+  - bias toward fast unit + boundary-focused integration tests
 
-- Do not push broad UI tests when unit/integration can cover the same risk.
-- Do not recommend testing private implementation details.
-- Do not ignore flaky tests as "acceptable noise."
-- Do not skip contract tests in integration-heavy boundaries.
+### Branch C: UI strategy
+
+- if UI churn is high:
+  - use focused behavior tests, avoid brittle screenshot overuse
+- if visual fidelity is contractual:
+  - add disciplined screenshot review workflow
+
+## Tradeoff realism
+
+Accept "imperfect but justified" decisions when explicit:
+
+- temporary test debt is acceptable with owner, deadline, and risk cap
+- selective retries may be acceptable while fixing root-cause flakiness
+
+Never normalize persistent flaky failures as expected behavior.
+
+## Uncertainty protocol
+
+Always report confidence:
+
+- `High` (>= 0.80)
+- `Medium` (0.60-0.79)
+- `Low` (< 0.60)
+
+If confidence is medium/low:
+
+- state assumptions and unknowns
+- provide at least one lower-risk fallback
+- request minimum extra evidence (failure stats, flaky rate, risk incidents)
+- escalate to `android-release-engineering` when unresolved risk affects go/no-go
+
+## Output contract
+
+Follow the global section order from `AGENTS.md`:
+
+1. `Context and constraints`
+2. `Decision and rationale`
+3. `Alternatives considered`
+4. `Tradeoffs`
+5. `Risks and mitigations`
+6. `Confidence and unknowns`
+7. `Cross-skill impacts`
+8. `Next implementation steps`
+
+Also include:
+
+- `Test pyramid recommendation`
+- `Test boundaries by layer`
+- `What not to test`
+- `Flakiness risks and controls`
+- `Performance test additions`
 
 ## Anti-pattern detection
 
-- UI-test-heavy suites with poor ROI
-- Snapshot/screenshot tests with no review discipline
-- Tests coupled to network/time randomness
-- Missing failure-path tests on critical flows
+- excessive UI tests for risks coverable at lower layers
+- tests asserting implementation details over behavior/contracts
+- nondeterministic test inputs (time/network/randomness)
+- missing failure-path coverage on high-impact journeys
 
 ## Related resources
 

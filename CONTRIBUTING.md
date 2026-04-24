@@ -2,56 +2,93 @@
 
 Thanks for contributing to the Android Engineering Skill Package.
 
-## Contribution principles
+This project is designed as a production-grade decision system, so contributions are reviewed for reasoning quality, not only formatting.
 
-- Keep skills focused on one domain
-- Move shared rules to `AGENTS.md`
-- Prefer explicit decision criteria over generic tips
-- Add anti-pattern detection and failure modes
-- Keep outputs structured and actionable
+## Contribution philosophy
 
-## Repository conventions
+Contributions should improve at least one of:
 
-### Skill structure
+- decision quality under constraints
+- cross-skill coherence and conflict behavior
+- real-world engineering fidelity
+- contributor scalability and maintainability
 
-```text
-skills/<skill-name>/
-  SKILL.md
-  references/   (optional but recommended for depth)
-  templates/    (optional, for reusable outputs)
-  examples/     (optional, for good/bad contrast)
-```
+Avoid contributions that only add checklist content without improving decision logic.
 
-### Naming
+## Repository contracts by layer
 
-- Use kebab-case directory names: `android-architecture`
-- Match frontmatter `name` with directory name
+- `AGENTS.md`: runtime constraints, authority model, arbitration protocol
+- `CONTEXT.md`: product philosophy and mental model
+- `skills/*/SKILL.md`: domain execution logic and branching
+- `references/`, `templates/`, `examples/`: deep support artifacts
 
-## Pull request checklist
+Do not duplicate global constraints inside every skill unless needed for local interpretation.
+
+## Skill contribution requirements
+
+Every new or changed `SKILL.md` must include:
+
+- clear trigger scope and boundaries
+- explicit decision workflow (not flat checklist)
+- context branching (if/then paths)
+- uncertainty handling (`High/Medium/Low` confidence behavior)
+- cross-skill interaction notes
+- output aligned to global section order in `AGENTS.md`
+- anti-pattern detection relevant to the domain
+
+## Review gates for pull requests
+
+A PR should pass these gates before merge:
+
+1. **Constraint gate**: no conflict with non-negotiable runtime constraints.
+2. **Authority gate**: no ambiguous ownership between skills.
+3. **Composition gate**: cross-skill interactions are deterministic.
+4. **Uncertainty gate**: medium/low confidence behavior is explicit.
+5. **Output gate**: global output contract order is preserved.
+6. **Realism gate**: recommendations reflect practical team constraints.
+
+## PR checklist
 
 Before opening a PR:
 
-- [ ] Scope is clear and limited
-- [ ] No duplicated global rules
-- [ ] SKILL.md includes trigger conditions, workflow, output format, anti-patterns
-- [ ] References/templates/examples are coherent and not redundant
-- [ ] Language is practical and non-dogmatic
-- [ ] Markdown formatting is clean
+- [ ] Scope and rationale are explicit
+- [ ] No duplicated global rules unless justified
+- [ ] Skill changes include branching and tradeoff-aware logic
+- [ ] Uncertainty/confidence handling is defined
+- [ ] Cross-skill implications are documented
+- [ ] Output structure remains contract-compliant
+- [ ] Markdown is clear and consistent
+- [ ] `CHANGELOG.md` updated when behavior changes materially
 
 ## Suggested PR format
 
-- Problem
-- Proposed change
-- Tradeoffs
-- Example prompt(s)
-- Expected output shape
+Use this structure in your PR description:
 
-## Reporting issues
+1. Problem and context
+2. Decision and rationale
+3. Alternatives considered
+4. Risks and mitigations
+5. Cross-skill impacts
+6. Compatibility impact
+7. Example prompt(s) and expected output shape
 
-Open an issue with:
+## Compatibility rules
 
-- Skill name(s) involved
-- Reproducible prompt
-- Current behavior
-- Expected behavior
-- Why it matters (risk, quality, maintainability, etc.)
+- Keep skill names and trigger intent stable unless there is a strong reason to change.
+- Avoid breaking output-contract or authority behavior without explicit migration notes.
+- If a skill's decision behavior changes materially, document migration guidance in the PR.
+
+## Issue reporting
+
+When reporting issues, include:
+
+- involved skill(s)
+- reproducible prompt
+- current vs expected behavior
+- impact (safety, reliability, maintainability, performance, release risk)
+- any relevant constraints (deadline, legacy, team size)
+
+## Code of conduct and security
+
+- Contributor behavior: `CODE_OF_CONDUCT.md`
+- Security disclosures: `SECURITY.md`

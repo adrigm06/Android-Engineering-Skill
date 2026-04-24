@@ -5,55 +5,118 @@ description: Android performance engineering skill focused on startup, jank, mem
 
 # Purpose
 
-Improve Android runtime performance using measurement-first diagnosis and targeted interventions.
+Improve Android runtime performance through evidence-driven diagnosis, targeted optimizations, and regression-resistant controls.
+
+## Scope and authority
+
+This skill is lead authority for runtime constraints:
+
+- startup and first-frame latency
+- frame-time stability and jank
+- memory pressure and ANR behavior
+- battery and thermal efficiency
+
+Supporting interactions:
+
+- align structural changes with `android-architecture`
+- align Compose hot-path interventions with `android-compose`
+- align release risk and rollback gates with `android-release-engineering`
 
 ## When to use
 
-- Slow cold start or poor startup metrics
-- UI jank and frame drops
-- Memory pressure, GC churn, or ANR patterns
-- Battery drain concerns
-- Need for profiling/tracing and optimization roadmap
+- slow startup, jank, ANR, memory, battery concerns
+- optimization planning for critical user journeys
+- performance regression investigation and prevention
 
-## Principles
+## Decision engine workflow
 
-1. Measure first, optimize second.
-2. Prioritize top user-impact bottlenecks.
-3. Use reproducible profiling scenarios.
-4. Validate improvements with before/after metrics.
-5. Avoid "micro-optimization theater."
+1. Define user-impact goals and performance envelopes.
+2. Capture baseline metrics and reproducible traces.
+3. Rank bottlenecks by impact vs fix cost.
+4. Choose intervention branch and expected gain.
+5. Validate with before/after evidence.
+6. Install guardrails against regression.
 
-## Workflow
+## Branching decision tree
 
-1. Define performance goals and key journeys.
-2. Collect baseline metrics and traces.
-3. Identify highest-impact bottlenecks.
-4. Propose targeted fixes with expected gains.
-5. Validate with repeatable measurements.
-6. Document guardrails to prevent regression.
+### Branch A: bottleneck domain
 
-## Output format
+- `startup-heavy`:
+  - remove/defers main-thread initialization
+  - prioritize first-frame and fully-drawn improvements
+- `jank-heavy`:
+  - isolate heavy UI/recomposition hotspots
+  - reduce expensive work in frame-critical windows
+- `memory/ANR-heavy`:
+  - identify leak/allocation spikes and blocked thread patterns
+- `battery-heavy`:
+  - reduce unnecessary background work and polling
 
-1. `Symptoms and probable bottlenecks`
-2. `Profiling/instrumentation plan`
-3. `Priority optimization plan`
-4. `Expected impact and tradeoffs`
-5. `Verification metrics`
-6. `Regression prevention checklist`
+### Branch B: intervention aggressiveness
 
-## Rules and restrictions
+- `near release`:
+  - prefer low-blast-radius fixes with measurable gain
+- `post-release hardening window`:
+  - allow deeper refactors if validated by benchmark/regression coverage
 
-- Do not optimize without instrumentation evidence.
-- Do not overfit to synthetic benchmarks only.
-- Do not recommend broad refactors when local fixes solve root causes.
-- Do not ignore battery and thermal side effects.
+### Branch C: architecture tension
+
+- if fastest fix violates boundaries:
+  - choose constrained temporary workaround only with expiry criteria
+  - define path back to target architecture
+
+## Tradeoff realism
+
+Allow context-justified choices:
+
+- a smaller guaranteed gain may beat risky large refactor near release
+- defer low-impact tuning when top bottlenecks remain unresolved
+
+Do not recommend optimization theater without measurable user impact.
+
+## Uncertainty protocol
+
+Always report confidence:
+
+- `High` (>= 0.80)
+- `Medium` (0.60-0.79)
+- `Low` (< 0.60)
+
+If confidence is medium/low:
+
+- state instrumentation gaps and assumptions
+- provide at least one conservative fallback
+- request minimum additional traces/metrics to decide
+- escalate to `android-architecture` or `android-compose` for cross-layer conflicts
+
+## Output contract
+
+Follow global order from `AGENTS.md`:
+
+1. `Context and constraints`
+2. `Decision and rationale`
+3. `Alternatives considered`
+4. `Tradeoffs`
+5. `Risks and mitigations`
+6. `Confidence and unknowns`
+7. `Cross-skill impacts`
+8. `Next implementation steps`
+
+Also include:
+
+- `Symptoms and probable bottlenecks`
+- `Profiling/instrumentation plan`
+- `Priority optimization plan`
+- `Expected impact and tradeoffs`
+- `Verification metrics`
+- `Regression prevention controls`
 
 ## Anti-pattern detection
 
-- Startup work overload on main thread
-- Recomposition hot loops in Compose screens
-- Memory leaks from lifecycle misuse
-- Heavy background work with no battery budget
+- optimize without baseline evidence
+- broad refactor proposals for local bottlenecks
+- ignoring battery/thermal regressions
+- performance changes without guardrails or re-measurement
 
 ## Related resources
 

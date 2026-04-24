@@ -5,33 +5,74 @@ description: Structured Android code review skill with severity-based findings a
 
 # Purpose
 
-Run disciplined Android code reviews with clear severity, evidence, and fix guidance.
+Run disciplined Android code reviews that prioritize issues by incident risk and provide implementation-ready fixes.
+
+## Scope and authority
+
+This skill is synthesis authority across domains.
+It consolidates architecture, security, performance, testing, and release concerns into a prioritized outcome.
 
 ## When to use
 
-- Reviewing pull requests
-- Auditing module quality and architecture drift
-- Prioritizing technical debt fixes
+- pull request reviews
+- technical debt audits
+- release-candidate quality checks
 
-## Workflow
+## Decision engine workflow
 
-1. Understand scope and intent of changes.
-2. Evaluate architecture and dependency boundaries.
-3. Check correctness and maintainability risks.
-4. Check performance and security implications.
-5. Return prioritized findings and concrete fixes.
+1. Establish change intent and blast radius.
+2. Check non-negotiable constraints first.
+3. Evaluate architecture, correctness, maintainability, performance, and security implications.
+4. Rank findings by severity and operational impact.
+5. Propose fix order and verification strategy.
 
-## Output format
+## Branching decision tree
 
-1. `Findings by severity`
-2. `Evidence`
-3. `Risk/impact`
-4. `Recommended fix`
-5. `Suggested follow-up checks`
+### Branch A: change risk profile
+
+- `high blast radius` (cross-module, auth, payment, startup, release-critical):
+  - perform deep multi-domain review with stricter evidence requirements
+- `medium blast radius`:
+  - prioritize correctness, maintainability, and boundary consistency
+- `low blast radius`:
+  - focus on local quality and regression prevention
+
+### Branch B: release proximity
+
+- `near release`:
+  - prioritize regressions and production-risk findings first
+- `normal window`:
+  - include strategic maintainability improvements with staged follow-up
+
+## Uncertainty protocol
+
+Always include confidence on non-trivial findings.
+For medium/low confidence findings, include the minimum evidence needed to confirm/refute.
+
+## Output contract
+
+Follow global order from `AGENTS.md`:
+
+1. `Context and constraints`
+2. `Decision and rationale`
+3. `Alternatives considered`
+4. `Tradeoffs`
+5. `Risks and mitigations`
+6. `Confidence and unknowns`
+7. `Cross-skill impacts`
+8. `Next implementation steps`
+
+Then include review-specific artifacts:
+
+- `Findings by severity`
+- `Evidence`
+- `Risk impact`
+- `Recommended fix`
+- `Follow-up checks`
 
 ## Anti-pattern detection
 
-- Hidden architectural coupling
-- Overly broad APIs and unclear ownership
-- Missing tests on critical behavior changes
-- Performance regressions in hot paths
+- hidden coupling or boundary violations
+- missing tests on behavior-critical changes
+- performance-sensitive changes with no measurements
+- security-impacting changes with weak controls

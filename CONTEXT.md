@@ -1,71 +1,104 @@
-# Android Engineering Skill Package - Context
+# Android Engineering Skill Package - System Context
 
-## Purpose
+## Product intent
 
-This document defines the design contract for building and evolving a professional Android skill system.
+This repository is a professional, open-source Android engineering decision system.
 
-The repository focuses on Android engineering workflows:
-architecture, Compose, build systems, testing, performance, security, debugging, code review, and release engineering.
+It is designed for agentic usage where multiple specialized skills can be activated, composed, and resolved deterministically under production constraints.
 
-## Core model
+The target behavior is not "generic advice," but senior-level decisions that balance safety, architecture quality, runtime reliability, delivery pressure, and team reality.
 
-```text
-Global Context (AGENTS.md)
-    -> Domain Skills (skills/*/SKILL.md)
-        -> References + Templates + Examples
-```
+## Layer model and ownership
 
-- `AGENTS.md` carries cross-cutting rules.
-- Skills provide specialized reasoning and outputs.
-- References/templates/examples keep skills maintainable and reusable.
+This package is intentionally split into three policy layers:
 
-## Quality bar
+1. `AGENTS.md` - runtime rules, hard constraints, and global arbitration protocol.
+2. `SKILL.md` files - execution logic per domain (decision trees, workflows, outputs).
+3. `references/`, `templates/`, `examples/` - deep guidance and reusable artifacts.
 
-This package should emulate a senior engineering profile:
+Boundary contract:
 
-- Android Staff Engineer
-- Build Engineer
-- Performance and Security reviewer
+- Keep non-negotiable constraints and arbitration only in `AGENTS.md`.
+- Keep domain logic and branching only in each skill.
+- Keep detailed supporting material in references/templates/examples.
 
-Guidance must be:
+## Mental model: decision engine, not checklist pack
 
-- Structured and actionable
-- Explicit about tradeoffs
-- Context-aware (team size, app maturity, constraints)
-- Maintainable for open-source contributors
+Each skill is expected to operate as a context-sensitive decision engine:
 
-## Design principles
+- interpret constraints
+- pick a strategy branch
+- evaluate tradeoffs
+- surface risks and uncertainty
+- return actionable next steps
 
-1. Keep skills small and focused.
-2. Avoid duplicating global rules inside each skill.
-3. Prefer decision criteria over checklists.
-4. Detect anti-patterns, not only "best practices."
-5. Make migration paths explicit for legacy codebases.
-6. Favor practical recommendations over purity.
-7. Keep repository growth manageable through clear conventions.
+A skill should not emit fixed recommendations without context fit.
 
-## Scope boundaries
+## System behavior in real-world ambiguity
+
+The system must handle non-ideal conditions explicitly:
+
+- incomplete or conflicting requirements
+- legacy code and migration risk
+- deadline and staffing constraints
+- imperfect but defensible short-term choices
+
+Recommendation quality is evaluated by decision quality under constraints, not by theoretical purity.
+
+## Composition philosophy
+
+Most non-trivial Android tasks span multiple domains.
+
+Expected composition behavior:
+
+- one lead skill for the dominant decision domain
+- one or more supporting skills for constraints and side effects
+- deterministic conflict resolution using the authority model from `AGENTS.md`
+- one integrated answer with rejected options explained
+
+## Skill quality standards
+
+Every skill should:
+
+- define clear triggers and boundaries
+- include branching logic for context variants
+- include uncertainty handling and confidence expectations
+- include anti-pattern detection and failure modes
+- produce outputs aligned with the global output contract order
+
+## Engineering realism principles
+
+To remain production-relevant, guidance should:
+
+- include realistic tradeoffs (cost, speed, reliability)
+- acknowledge when "not ideal" options are acceptable with mitigations
+- separate temporary expedients from long-term target state
+- provide migration sequencing with rollback-safe steps
+
+## Evolution policy
+
+The system evolves by increasing reasoning quality, composition robustness, and contributor scalability.
+
+When adding or changing skills:
+
+- preserve architecture and dependency constraints
+- avoid rule duplication between global and skill scopes
+- maintain backward compatibility for output contracts where possible
+- document behavior changes with clear rationale and migration notes
+
+## Scope
 
 In scope:
 
 - Android architecture and modularization
-- Jetpack Compose engineering
-- Gradle and build performance
-- Testing strategy and reliability
-- Runtime performance engineering
-- Mobile security controls
+- Compose UI engineering
+- Gradle/build and CI strategy
+- testing, performance, security, debugging, code review, release
 
 Out of scope:
 
-- Backend architecture deep dives
-- Non-Android UI frameworks unless needed for integration context
-- Generic software advice without Android implications
+- backend-only design not tied to Android implications
+- generic guidance detached from Android runtime/build constraints
 
-## Evolution strategy
-
-- Add skills only when a domain has clear boundaries and reusable patterns.
-- Keep `SKILL.md` concise; move depth to `references/`.
-- Add templates when output format repeats across tasks.
-- Add examples when teams frequently misapply patterns.
-
-This file is the design anchor for future iterations.
+This document defines product philosophy and design intent.
+Implementation rules belong in `AGENTS.md`, and domain execution belongs in each `SKILL.md`.
