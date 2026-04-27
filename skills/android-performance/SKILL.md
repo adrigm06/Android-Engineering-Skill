@@ -65,6 +65,17 @@ Supporting interactions:
   - choose constrained temporary workaround only with expiry criteria
   - define path back to target architecture
 
+## Quantitative gates
+
+Use measurable gates and label each `pass | at-risk | fail`:
+
+- startup regression budget gate (relative to baseline)
+- frame/jank regression budget gate (relative to baseline)
+- memory/ANR safety gate (absolute + trend checks)
+- battery/thermal regression gate (relative to baseline)
+
+If no reliable baseline exists, return a measurement-first plan before committing deep optimizations.
+
 ## Tradeoff realism
 
 Allow context-justified choices:
@@ -88,6 +99,23 @@ If confidence is medium/low:
 - provide at least one conservative fallback
 - request minimum additional traces/metrics to decide
 - escalate to `android-architecture` or `android-compose` for cross-layer conflicts
+
+## Cross-skill handoff payload
+
+When escalating to/supporting other skills, include:
+
+- `decision_domain`
+- `requesting_skill: android-performance`
+- `target_skill`
+- `risk_class`
+- `confidence` (band + numeric)
+- `assumptions`
+- `hard_constraints_checked`
+- `quantitative_gates` (`pass | at-risk | fail`)
+- `blocking_conflicts`
+- `preferred_path`
+- `fallback_path`
+- `minimum_extra_evidence`
 
 ## Output contract
 

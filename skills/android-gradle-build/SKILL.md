@@ -86,6 +86,17 @@ If baseline metrics are missing, propose measurement-first phase before structur
 - prioritize reproducibility and deterministic cache keys before aggressive parallelization
 - if release cadence is tight, gate risky build changes behind opt-in CI paths first
 
+## Quantitative gates
+
+Use measurable gates and label each `pass | at-risk | fail`:
+
+- configuration-time regression budget gate
+- clean-build-time regression budget gate
+- incremental-build-time regression budget gate
+- cache-effectiveness gate (hit-rate and determinism trend)
+
+If baseline build metrics are missing, run measurement-first and postpone irreversible build-graph changes.
+
 ## Conflict handling and composition
 
 When used with other skills:
@@ -132,6 +143,23 @@ For medium/low confidence:
 - request the minimum additional measurements needed
 - escalate to `android-release-engineering` for near-release risk conflicts
 
+## Cross-skill handoff payload
+
+When escalating to/supporting other skills, include:
+
+- `decision_domain`
+- `requesting_skill: android-gradle-build`
+- `target_skill`
+- `risk_class`
+- `confidence` (band + numeric)
+- `assumptions`
+- `hard_constraints_checked`
+- `quantitative_gates` (`pass | at-risk | fail`)
+- `blocking_conflicts`
+- `preferred_path`
+- `fallback_path`
+- `minimum_extra_evidence`
+
 ## Output contract
 
 Follow global order from `AGENTS.md`:
@@ -157,3 +185,4 @@ Include build-specific artifacts:
 ## Related resources
 
 - `references/build-optimization-checklist.md`
+- `references/quantitative-gates.md`

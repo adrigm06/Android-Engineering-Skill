@@ -137,6 +137,23 @@ If confidence is medium/low:
 - identify minimum missing data needed to finalize
 - escalate to supporting skills where uncertainty is cross-domain
 
+## Cross-skill handoff payload
+
+When escalating to/supporting other skills, include:
+
+- `decision_domain`
+- `requesting_skill: android-architecture`
+- `target_skill`
+- `risk_class`
+- `confidence` (band + numeric)
+- `assumptions`
+- `hard_constraints_checked`
+- `quantitative_gates` (`pass | at-risk | fail`)
+- `blocking_conflicts`
+- `preferred_path`
+- `fallback_path`
+- `minimum_extra_evidence`
+
 ## Output contract
 
 Use the global section order from `AGENTS.md` and adapt content for architecture tasks:

@@ -57,6 +57,17 @@ Supporting interactions:
 - if visual fidelity is contractual:
   - add disciplined screenshot review workflow
 
+## Quantitative gates
+
+Use measurable gates and label each `pass | at-risk | fail`:
+
+- critical-flow coverage gate (required behavior paths covered)
+- flaky-rate gate (suite-level instability budget)
+- execution-time gate (CI viability budget)
+- regression-detection gate (failure-path and contract-test coverage on high-risk boundaries)
+
+If coverage and flake baselines are missing, return a measurement-first stabilization plan.
+
 ## Tradeoff realism
 
 Accept "imperfect but justified" decisions when explicit:
@@ -80,6 +91,23 @@ If confidence is medium/low:
 - provide at least one lower-risk fallback
 - request minimum extra evidence (failure stats, flaky rate, risk incidents)
 - escalate to `android-release-engineering` when unresolved risk affects go/no-go
+
+## Cross-skill handoff payload
+
+When escalating to/supporting other skills, include:
+
+- `decision_domain`
+- `requesting_skill: android-testing`
+- `target_skill`
+- `risk_class`
+- `confidence` (band + numeric)
+- `assumptions`
+- `hard_constraints_checked`
+- `quantitative_gates` (`pass | at-risk | fail`)
+- `blocking_conflicts`
+- `preferred_path`
+- `fallback_path`
+- `minimum_extra_evidence`
 
 ## Output contract
 

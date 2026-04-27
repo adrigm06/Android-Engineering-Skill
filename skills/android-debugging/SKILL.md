@@ -11,6 +11,11 @@ Diagnose Android issues with hypothesis-ranked investigation, reproducible exper
 
 This skill is root-cause authority for incident triage and narrowing workflow.
 
+## When not to use
+
+- when the primary question is architecture topology rather than incident diagnosis (`android-architecture`)
+- when the task is release go/no-go decision without active root-cause investigation (`android-release-engineering`)
+
 ## When to use
 
 - intermittent crashes and inconsistent behavior
@@ -42,10 +47,63 @@ This skill is root-cause authority for incident triage and narrowing workflow.
 - `non-blocking`:
   - optimize for high-confidence root-cause isolation before code change
 
+### Branch C: issue class
+
+- `crash-heavy`:
+  - prioritize crash signature clustering and deterministic repro around top signatures
+- `ANR/jank-heavy`:
+  - prioritize thread-state and timing instrumentation; escalate to `android-performance`
+- `data-integrity risk`:
+  - prioritize correctness containment and rollback-safe mitigations
+
+## Quantitative gates
+
+Use measurable debugging gates before declaring closure:
+
+- reproducibility gate:
+  - `pass` when deterministic repro or high-signal repro matrix exists
+  - `at-risk` when repro is intermittent but bounded
+  - `fail` when no meaningful repro path exists
+- evidence convergence gate:
+  - `pass` when top hypothesis has converging signals across independent instrumentation
+  - `at-risk` when signals are partially convergent
+  - `fail` when evidence conflicts materially
+- verification gate:
+  - `pass` when proposed fix eliminates symptom in controlled validation runs
+  - `at-risk` when partial improvement only
+  - `fail` when regression or no improvement appears
+
 ## Uncertainty protocol
 
-Always provide confidence per primary hypothesis.
-If confidence remains low, widen instrumentation and escalate to supporting skill by domain.
+Always provide confidence per primary hypothesis:
+
+- `High` (>= 0.80)
+- `Medium` (0.60-0.79)
+- `Low` (< 0.60)
+
+If confidence is medium/low:
+
+- list assumptions explicitly
+- request minimum additional evidence needed to finalize root cause
+- provide at least one fallback containment option
+- escalate to supporting skill by domain when cross-skill impact is material
+
+## Cross-skill handoff payload
+
+When escalating, include:
+
+- `decision_domain`
+- `requesting_skill: android-debugging`
+- `target_skill`
+- `risk_class`
+- `confidence` (band + numeric)
+- `assumptions`
+- `hard_constraints_checked`
+- `quantitative_gates` (`pass | at-risk | fail`)
+- `blocking_conflicts`
+- `preferred_path`
+- `fallback_path`
+- `minimum_extra_evidence`
 
 ## Output contract
 
@@ -75,3 +133,8 @@ Then include debugging-specific artifacts:
 - no reproducible baseline
 - noisy logs without diagnostic hypothesis
 - deep refactor before root cause confirmation
+
+## Related resources
+
+- `references/debugging-playbook.md`
+- `templates/debug-investigation.md`

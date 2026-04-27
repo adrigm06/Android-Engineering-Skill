@@ -12,6 +12,11 @@ Run disciplined Android code reviews that prioritize issues by incident risk and
 This skill is synthesis authority across domains.
 It consolidates architecture, security, performance, testing, and release concerns into a prioritized outcome.
 
+## When not to use
+
+- when the primary task is deep root-cause investigation (`android-debugging`)
+- when the primary goal is new architecture design selection (`android-architecture`)
+
 ## When to use
 
 - pull request reviews
@@ -44,10 +49,45 @@ It consolidates architecture, security, performance, testing, and release concer
 - `normal window`:
   - include strategic maintainability improvements with staged follow-up
 
+### Branch C: change category
+
+- `security-sensitive`:
+  - require stronger evidence and verification for exploitability/reachability concerns
+- `performance-sensitive`:
+  - require measurement-backed findings for hotspot regressions
+- `boundary-sensitive`:
+  - prioritize dependency direction and ownership violations
+
+## Quantitative gates
+
+Use measurable evidence gates for high-impact findings:
+
+- evidence sufficiency gate:
+  - `pass` when finding has concrete code evidence and reproducible risk path
+  - `at-risk` when evidence is partial but plausible
+  - `fail` when claim is mostly speculative
+- verification readiness gate:
+  - `pass` when recommended fix includes clear verification steps
+  - `at-risk` when verification is incomplete
+  - `fail` when no verification plan exists
+
 ## Uncertainty protocol
 
 Always include confidence on non-trivial findings.
 For medium/low confidence findings, include the minimum evidence needed to confirm/refute.
+
+Confidence bands:
+
+- `High` (>= 0.80)
+- `Medium` (0.60-0.79)
+- `Low` (< 0.60)
+
+If confidence is medium/low:
+
+- list assumptions explicitly
+- request minimum additional evidence that can re-rank severity
+- provide at least one fallback recommendation with lower regression risk
+- escalate to specialized skill when domain certainty is insufficient
 
 ## Output contract
 
@@ -70,9 +110,31 @@ Then include review-specific artifacts:
 - `Recommended fix`
 - `Follow-up checks`
 
+## Cross-skill handoff payload
+
+When escalating to specialized skills, include:
+
+- `decision_domain`
+- `requesting_skill: android-code-review`
+- `target_skill`
+- `risk_class`
+- `confidence` (band + numeric)
+- `assumptions`
+- `hard_constraints_checked`
+- `quantitative_gates` (`pass | at-risk | fail`)
+- `blocking_conflicts`
+- `preferred_path`
+- `fallback_path`
+- `minimum_extra_evidence`
+
 ## Anti-pattern detection
 
 - hidden coupling or boundary violations
 - missing tests on behavior-critical changes
 - performance-sensitive changes with no measurements
 - security-impacting changes with weak controls
+
+## Related resources
+
+- `references/review-severity-evidence.md`
+- `templates/review-report.md`

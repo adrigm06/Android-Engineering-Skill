@@ -91,6 +91,33 @@ For multi-domain tasks:
 4. Annotate rejected recommendations with reason (constraint violation, risk mismatch, or timeline mismatch).
 5. Return a single integrated plan, not independent checklists.
 
+## Cross-skill handoff contract
+
+When one skill escalates or hands off to another, include this payload explicitly:
+
+- `decision_domain`: what decision is being delegated
+- `requesting_skill`: source skill name
+- `target_skill`: supporting skill name
+- `risk_class`: `Critical | High | Medium | Low`
+- `confidence`: `High | Medium | Low` and numeric estimate
+- `assumptions`: assumptions that shaped current recommendation
+- `hard_constraints_checked`: non-negotiable constraints already validated
+- `quantitative_gates`: measured metrics and current status vs gates
+- `blocking_conflicts`: unresolved conflicts requiring arbitration
+- `preferred_path`: currently recommended path
+- `fallback_path`: lower-risk fallback if preferred path fails
+- `minimum_extra_evidence`: minimum additional data required to finalize
+
+Use the handoff payload whenever cross-skill impacts are material; do not hand off with implicit context.
+
+## Quantitative gate policy
+
+Use measurable gates for release/performance/testing/security/build decisions.
+
+- Prefer relative gates against baseline (regression budgets) plus absolute safety gates where applicable.
+- If no metrics exist, return measurement-first plan before irreversible recommendations.
+- Label each gate as `pass`, `at-risk`, or `fail`.
+
 ## Uncertainty and confidence protocol
 
 Every non-trivial recommendation must include confidence:

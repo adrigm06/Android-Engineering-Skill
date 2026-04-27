@@ -15,6 +15,11 @@ This skill is production gate authority for:
 - staged rollout and monitoring guardrails
 - rollback criteria and incident gating
 
+## When not to use
+
+- when the task is root-cause analysis without release decision pressure (`android-debugging`)
+- when the task is primarily architecture refactoring strategy (`android-architecture`)
+
 ## When to use
 
 - release candidate readiness checks
@@ -43,10 +48,27 @@ This skill is production gate authority for:
 - if recommendation increases release risk beyond threshold:
   - defer or scope-limit change until post-release window
 
+## Quantitative gates
+
+Use measurable release gates and label each as `pass | at-risk | fail`:
+
+- crash-free sessions gate (absolute safety gate)
+- ANR rate gate (absolute safety gate)
+- startup/jank regression budget (relative to baseline)
+- unresolved critical security gate (must pass)
+
+If required metrics are missing, return a measurement-first plan before irreversible rollout decisions.
+
 ## Uncertainty protocol
 
 Always report confidence (`High`, `Medium`, `Low`).
 For medium/low confidence, provide safer fallback release options.
+
+Confidence bands:
+
+- `High` (>= 0.80)
+- `Medium` (0.60-0.79)
+- `Low` (< 0.60)
 
 If confidence is medium/low:
 
@@ -76,9 +98,31 @@ Then include release-specific artifacts:
 - `Rollback criteria`
 - `Post-release checks`
 
+## Cross-skill handoff payload
+
+When escalating to/supporting other skills, include:
+
+- `decision_domain`
+- `requesting_skill: android-release-engineering`
+- `target_skill`
+- `risk_class`
+- `confidence` (band + numeric)
+- `assumptions`
+- `hard_constraints_checked`
+- `quantitative_gates` (`pass | at-risk | fail`)
+- `blocking_conflicts`
+- `preferred_path`
+- `fallback_path`
+- `minimum_extra_evidence`
+
 ## Anti-pattern detection
 
 - big-bang rollout without staged guardrails
 - weak observability for crash/performance signals
 - ambiguous rollback triggers
 - signing or config drift across environments
+
+## Related resources
+
+- `references/release-gates.md`
+- `templates/release-go-no-go.md`

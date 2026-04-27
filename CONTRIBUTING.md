@@ -29,12 +29,14 @@ Do not duplicate global constraints inside every skill unless needed for local i
 Every new or changed `SKILL.md` must include:
 
 - clear trigger scope and boundaries
+- frontmatter `description` updated to clearly state what the skill does and when it should trigger
 - explicit decision workflow (not flat checklist)
 - context branching (if/then paths)
 - uncertainty handling (`High/Medium/Low` confidence behavior)
 - cross-skill interaction notes
 - output aligned to global section order in `AGENTS.md`
 - anti-pattern detection relevant to the domain
+- corresponding catalog updates in `skills/README.md` (and `README.md` when user-facing behavior changes)
 
 ## Review gates for pull requests
 
@@ -54,9 +56,11 @@ Before opening a PR:
 - [ ] Scope and rationale are explicit
 - [ ] No duplicated global rules unless justified
 - [ ] Skill changes include branching and tradeoff-aware logic
+- [ ] Skill frontmatter `description` is updated and trigger intent is clear
 - [ ] Uncertainty/confidence handling is defined
 - [ ] Cross-skill implications are documented
 - [ ] Output structure remains contract-compliant
+- [ ] `skills/README.md` is updated when skill scope/behavior changes
 - [ ] Markdown is clear and consistent
 - [ ] `CHANGELOG.md` updated when behavior changes materially
 

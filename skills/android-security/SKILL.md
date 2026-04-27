@@ -51,6 +51,17 @@ If security risk is critical, this skill can override convenience, performance, 
 - if threat model is weak/unknown:
   - choose conservative baseline controls and request missing threat inputs
 
+## Quantitative gates
+
+Use measurable risk gates and label each `pass | at-risk | fail`:
+
+- unresolved critical exploitability gate (must pass for release)
+- sensitive data exposure gate (must pass for release)
+- control coverage gate (critical assets mapped to active controls)
+- observability gate (security-relevant detection/alert paths in place)
+
+If threat evidence is incomplete, return a measurement and threat-model completion plan first.
+
 ## Tradeoff realism
 
 Allow constrained compromises only when explicit:
@@ -74,6 +85,23 @@ If confidence is medium/low:
 - provide least-risk interim control
 - escalate to `android-release-engineering` when residual risk may block release
 - escalate to `android-architecture` when control requires structural change
+
+## Cross-skill handoff payload
+
+When escalating to/supporting other skills, include:
+
+- `decision_domain`
+- `requesting_skill: android-security`
+- `target_skill`
+- `risk_class`
+- `confidence` (band + numeric)
+- `assumptions`
+- `hard_constraints_checked`
+- `quantitative_gates` (`pass | at-risk | fail`)
+- `blocking_conflicts`
+- `preferred_path`
+- `fallback_path`
+- `minimum_extra_evidence`
 
 ## Output contract
 
