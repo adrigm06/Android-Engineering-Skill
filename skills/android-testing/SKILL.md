@@ -111,7 +111,7 @@ When escalating to/supporting other skills, include:
 
 ## Output contract
 
-Follow the global section order from `AGENTS.md`:
+Follow the global section order from `../../AGENTS.md`:
 
 1. `Context and constraints`
 2. `Decision and rationale`

@@ -53,7 +53,7 @@ If key inputs are missing, proceed with explicit assumptions and lower confidenc
 3. Select architecture style branch and module topology branch.
 4. Validate against global dependency constraints.
 5. Run cross-skill checks (security/performance/build/testing/release).
-6. Resolve conflicts using authority model from `AGENTS.md`.
+6. Resolve conflicts using authority model from `../../AGENTS.md`.
 7. Return target-state design + phased migration plan + rollback points.
 
 ## Branching decision tree
@@ -156,7 +156,7 @@ When escalating to/supporting other skills, include:
 
 ## Output contract
 
-Use the global section order from `AGENTS.md` and adapt content for architecture tasks:
+Use the global section order from `../../AGENTS.md` and adapt content for architecture tasks:
 
 1. `Context and constraints`
 2. `Decision and rationale`

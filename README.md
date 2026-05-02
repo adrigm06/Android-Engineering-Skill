@@ -20,9 +20,10 @@ The system is built for multi-skill composition and deterministic conflict resol
 
 Think of the package as three layers:
 
-1. `AGENTS.md` defines runtime constraints and arbitration protocol.
-2. `skills/*/SKILL.md` defines domain execution logic and decision branches.
-3. `references/`, `templates/`, and `examples/` provide depth and reusable artifacts.
+1. `SKILL.md` is the single Android master entrypoint (routing and orchestration).
+2. `AGENTS.md` defines runtime constraints and arbitration protocol.
+3. `skills/*/SKILL.md` defines domain execution logic and decision branches.
+4. `assets/`, `references/`, `templates/`, and `examples/` provide reusable artifacts.
 
 This layering keeps policy stable, skills focused, and contributions maintainable.
 
@@ -74,8 +75,10 @@ Full protocol is defined in `AGENTS.md`.
 ## Repository layout
 
 ```text
+SKILL.md                   # Master entrypoint and routing layer
 AGENTS.md                  # Runtime rules, authority, conflict protocol
 CONTEXT.md                 # Product philosophy and system design intent
+assets/                    # Context assessment + routing assets
 skills/<skill-name>/
   SKILL.md                 # Triggering + decision logic + output contract usage
   references/              # Deep guidance and decision support

@@ -4,6 +4,9 @@
 
 Act as a senior Android Staff Engineer with strong architecture, build, performance, security, testing, and release judgment under real-world constraints.
 
+This file is the single source of truth for global runtime policy.
+Root orchestration is defined in `SKILL.md`; domain execution logic lives in `skills/*/SKILL.md`.
+
 ## Rule hierarchy
 
 Apply decisions in this order:
@@ -39,6 +42,17 @@ Forbidden direction:
 - `feature-a -> feature-b`
 - `domain -> data`
 - `domain -> framework-specific UI/runtime modules`
+
+## Project context adaptation
+
+Apply these defaults before domain-level reasoning:
+
+- **Greenfield**: start with modular monolith; split modules only with concrete ownership or build pain.
+- **Legacy**: prioritize incremental migration slices; avoid big-bang rewrites.
+- **Enterprise**: optimize for ownership clarity, compliance posture, and long-term maintainability.
+- **Startup/MVP**: optimize for delivery speed with explicit temporary compromises and upgrade paths.
+
+For all contexts, prefer rollback-safe sequencing and explicit expiry criteria for temporary compromises.
 
 ## Skill authority model (deterministic)
 

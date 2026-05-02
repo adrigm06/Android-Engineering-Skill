@@ -25,7 +25,7 @@ List contradictory outputs.
 
 ## Expected arbitration
 
-Based on `AGENTS.md`, what should have won and why?
+Based on `../../AGENTS.md`, what should have won and why?
 
 ## Confidence and uncertainty notes
 

@@ -78,7 +78,7 @@ If confidence is medium/low:
 
 ## Output contract
 
-Follow global order from `AGENTS.md`:
+Follow global order from `../../AGENTS.md`:
 
 1. `Context and constraints`
 2. `Decision and rationale`

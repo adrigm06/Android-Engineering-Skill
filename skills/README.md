@@ -2,6 +2,9 @@
 
 This directory contains domain skills that compose into a unified Android decision system.
 
+Root entrypoint orchestration is handled by `../SKILL.md`.
+Global policy authority is in `../AGENTS.md`.
+
 ## Core decision domains
 
 - `android-architecture`: structural authority for boundaries, layering, and modularization
@@ -21,5 +24,5 @@ This directory contains domain skills that compose into a unified Android decisi
 
 - Use one lead skill for the dominant decision domain.
 - Add supporting skills only for material constraints.
-- Resolve conflicts using authority protocol in `AGENTS.md`.
+- Resolve conflicts using authority protocol in `../AGENTS.md`.
 - Return one integrated decision, not independent checklists.

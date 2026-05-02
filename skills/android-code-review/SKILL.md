@@ -58,6 +58,17 @@ It consolidates architecture, security, performance, testing, and release concer
 - `boundary-sensitive`:
   - prioritize dependency direction and ownership violations
 
+### Branch D: evidence availability
+
+- `full diff/artifacts available`:
+  - run normal severity-based review flow
+- `partial artifacts only`:
+  - scope findings to verified surfaces, mark unknowns explicitly
+- `no diff/artifacts provided`:
+  - do not approve/reject code quality conclusively
+  - return a provisional risk review with required evidence checklist
+  - provide a low-risk fallback path (narrow merge scope or hold)
+
 ## Quantitative gates
 
 Use measurable evidence gates for high-impact findings:
@@ -91,7 +102,7 @@ If confidence is medium/low:
 
 ## Output contract
 
-Follow global order from `AGENTS.md`:
+Follow global order from `../../AGENTS.md`:
 
 1. `Context and constraints`
 2. `Decision and rationale`
@@ -109,6 +120,16 @@ Then include review-specific artifacts:
 - `Risk impact`
 - `Recommended fix`
 - `Follow-up checks`
+
+### No-diff fallback template (required when artifacts are missing)
+
+When PR diff or runtime artifacts are missing, add:
+
+- `Review status`: `Provisional - insufficient evidence`
+- `Blocking unknowns`: exact missing artifacts (diff, module list, benchmarks, security config deltas)
+- `Provisional findings`: only evidence-backed risks, each marked `confirmed` or `hypothesis`
+- `Minimum evidence to finalize`: smallest artifact set needed for final severity ranking
+- `Fallback path`: low-risk option (scope split, hold merge, or merge non-runtime subset only)
 
 ## Cross-skill handoff payload
 

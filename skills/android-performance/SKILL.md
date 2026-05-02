@@ -65,6 +65,27 @@ Supporting interactions:
   - choose constrained temporary workaround only with expiry criteria
   - define path back to target architecture
 
+### Branch D: broad optimization scope
+
+- if request is broad/ambiguous (e.g., "optimize the whole app"):
+  - return a staged 30/60/90-day plan instead of ad-hoc tips
+  - keep each stage tied to measurable gates and rollback triggers
+
+#### 30/60/90 plan default
+
+- **Day 0-30 (Baseline and containment)**:
+  - establish startup/jank/memory/ANR/battery baselines
+  - instrument top 3 user journeys
+  - fix highest-severity regressions with low blast radius
+- **Day 31-60 (Targeted optimization)**:
+  - optimize top bottlenecks by measured impact
+  - harden Compose hot paths and background work scheduling
+  - validate before/after deltas against regression budgets
+- **Day 61-90 (Scale and prevention)**:
+  - codify performance gates in CI/release pipeline
+  - add regression alerts, ownership, and playbooks
+  - retire temporary workarounds and close debt with expiry criteria
+
 ## Quantitative gates
 
 Use measurable gates and label each `pass | at-risk | fail`:
@@ -119,7 +140,7 @@ When escalating to/supporting other skills, include:
 
 ## Output contract
 
-Follow global order from `AGENTS.md`:
+Follow global order from `../../AGENTS.md`:
 
 1. `Context and constraints`
 2. `Decision and rationale`
