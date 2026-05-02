@@ -1,66 +1,60 @@
 # Android Engineering Skill Package
 
-A modular, composable, production-grade Android skill system for agentic engineering workflows.
+![Platform: Android](https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
-This package is designed to behave like a senior Android Staff Engineer under real constraints, not like a generic checklist assistant.
+A modular, production-oriented Android skill package for agentic engineering workflows.
 
-## What this is
+## Purpose
 
-This repository is an open-source decision engine for Android engineering tasks:
+This repository is an open-source decision engine for high-impact Android engineering work:
 
-- architecture and modularization
-- Compose UI system design
+- Architecture and modularization
+- Compose UI state and design systems
 - Gradle/build and CI strategy
-- testing strategy and quality confidence
-- performance, security, debugging, and release readiness
+- Testing strategy and confidence planning
+- Performance, security, debugging, and release readiness
 
-The system is built for multi-skill composition and deterministic conflict resolution.
+The package is built for multi-skill composition and deterministic conflict resolution.
 
-## Mental model
+## Install with npx
 
-Think of the package as three layers:
+Install a local copy with:
 
-1. `SKILL.md` is the single Android master entrypoint (routing and orchestration).
-2. `AGENTS.md` defines runtime constraints and arbitration protocol.
-3. `skills/*/SKILL.md` defines domain execution logic and decision branches.
-4. `assets/`, `references/`, `templates/`, and `examples/` provide reusable artifacts.
+```bash
+npx @adrigm06/android-engineering-skill
+```
 
-This layering keeps policy stable, skills focused, and contributions maintainable.
+By default this creates `./android-engineering-skill` in the current directory.
 
-## Why this exists
+Optional target directory:
 
-Most assistant configurations collapse into one giant prompt that drifts over time.
-This package uses explicit modularity and authority boundaries to avoid that failure mode.
+```bash
+npx @adrigm06/android-engineering-skill ./path/to/install
+```
 
-Core goals:
+## Mental Model
 
-- internal coherence across skills
-- deterministic decisions under conflict
-- tradeoff-aware recommendations with risk visibility
-- production realism over theoretical purity
-- open-source contributor scalability
+The system uses four layers to keep policy stable and domain logic focused:
 
-## Decision engine behavior
+1. `SKILL.md`: master entrypoint and routing
+2. `AGENTS.md`: runtime constraints and conflict arbitration
+3. `skills/*/SKILL.md`: domain logic and decision branching
+4. `assets/`, `references/`, `templates/`, `examples/`: reusable support artifacts
 
-The system upgrades from "skill checklist" to "skill decision engine":
+## Cross-Skill Authority
 
-- each skill branches by context, constraints, and risk
-- uncertainty is explicit via confidence levels and assumptions
-- cross-skill conflicts resolve through authority model, not prompt ordering
-- outputs follow one global contract across all domains
+Domain conflicts are resolved through an explicit authority model defined in `AGENTS.md`.
 
-## Cross-skill authority highlights
+| Domain | Authority | Primary responsibility |
+| :--- | :--- | :--- |
+| `android-security` | Critical / global override | Exploitability and sensitive data risk |
+| `android-architecture` | Structural | Module boundaries and dependency direction |
+| `android-release-engineering` | Production gate | Go/no-go, rollout, and rollback policy |
+| `android-performance` | Runtime | Startup, jank, memory, ANR, battery |
+| `android-gradle-build` | Build/CI | Build graph and CI constraints |
 
-- `android-security`: global critical override for exploitability and sensitive data risk
-- `android-architecture`: structural authority for boundaries and layering
-- `android-release-engineering`: production gate authority for go/no-go and rollback policy
-- `android-performance`: runtime authority for startup/jank/memory/ANR/battery constraints
-- `android-gradle-build`: build graph and CI authority
-- other skills provide domain execution and synthesis
-
-Full protocol is defined in `AGENTS.md`.
-
-## Included skills
+## Included Skills
 
 - `android-architecture`
 - `android-compose`
@@ -72,21 +66,23 @@ Full protocol is defined in `AGENTS.md`.
 - `android-debugging`
 - `android-release-engineering`
 
-## Repository layout
+## Repository Structure
 
 ```text
-SKILL.md                   # Master entrypoint and routing layer
-AGENTS.md                  # Runtime rules, authority, conflict protocol
-CONTEXT.md                 # Product philosophy and system design intent
-assets/                    # Context assessment + routing assets
-skills/<skill-name>/
-  SKILL.md                 # Triggering + decision logic + output contract usage
-  references/              # Deep guidance and decision support
-  templates/               # Reusable response artifacts
-  examples/                # Good/bad pattern contrasts
+.
+|- SKILL.md                   # Master entrypoint and routing
+|- AGENTS.md                  # Runtime rules and conflict protocol
+|- CONTEXT.md                 # Product philosophy and intent
+|- assets/                    # Routing and evaluation assets
+`- skills/
+   `- <skill-name>/
+      |- SKILL.md             # Domain decision logic and output contract usage
+      |- references/          # Deep guidance
+      |- templates/           # Reusable response artifacts
+      `- examples/            # Good vs bad pattern contrasts
 ```
 
-## Output quality baseline
+## Output Quality Baseline
 
 All non-trivial outputs follow the same section order:
 
@@ -99,25 +95,14 @@ All non-trivial outputs follow the same section order:
 7. Cross-skill impacts
 8. Next implementation steps
 
-## Open-source readiness
+## Contributing and Evolution
 
-The repository includes:
+- Improve decision quality and conflict determinism
+- Keep skill names and trigger intent stable unless strongly justified
+- Document material behavior changes in `CHANGELOG.md`
 
-- contribution and review policy in `CONTRIBUTING.md`
-- security disclosure process in `SECURITY.md`
-- semantic changelog in `CHANGELOG.md`
-- issue templates in `.github/ISSUE_TEMPLATE/`
-
-## Evolution policy
-
-- evolve by improving decision quality and conflict determinism
-- preserve stable skill names and trigger intent unless strongly justified
-- document material behavior changes in `CHANGELOG.md`
-
-## Contributing
-
-See `CONTRIBUTING.md` for contribution standards, compatibility expectations, and review requirements.
+See `CONTRIBUTING.md` for contribution standards and compatibility expectations.
 
 ## License
 
-MIT License. See `LICENSE`.
+MIT. See `LICENSE`.

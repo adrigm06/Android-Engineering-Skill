@@ -95,4 +95,4 @@ When reporting issues, include:
 ## Code of conduct and security
 
 - Contributor behavior: `CODE_OF_CONDUCT.md`
-- Security disclosures: `SECURITY.md`
+- Security disclosures: open a private maintainer contact channel before public disclosure.

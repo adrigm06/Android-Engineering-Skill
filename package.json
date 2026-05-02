@@ -1,0 +1,35 @@
+{
+  "name": "@adrigm06/android-engineering-skill",
+  "version": "0.1.0",
+  "description": "Unified Android engineering skill package installer",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": {
+    "android-engineering-skill": "bin/install-skill.js"
+  },
+  "files": [
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "CONTEXT.md",
+    "LICENSE",
+    "README.md",
+    "SKILL.md",
+    "assets",
+    "skills",
+    "bin"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": [
+    "android",
+    "agent",
+    "skills",
+    "kotlin",
+    "compose"
+  ]
+}
