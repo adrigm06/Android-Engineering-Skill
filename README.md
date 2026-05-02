@@ -59,6 +59,7 @@ Domain conflicts are resolved through an explicit authority model defined in `AG
 - `android-architecture`
 - `android-compose`
 - `android-gradle-build`
+- `android-kotlin-concurrency`
 - `android-testing`
 - `android-performance`
 - `android-security`
@@ -72,7 +73,6 @@ Domain conflicts are resolved through an explicit authority model defined in `AG
 .
 |- SKILL.md                   # Master entrypoint and routing
 |- AGENTS.md                  # Runtime rules and conflict protocol
-|- CONTEXT.md                 # Product philosophy and intent
 |- assets/                    # Routing and evaluation assets
 `- skills/
    `- <skill-name>/

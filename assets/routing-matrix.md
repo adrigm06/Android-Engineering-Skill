@@ -22,3 +22,15 @@ Pick one lead skill. Add only supporting skills with material impact.
 - Runtime SLA constraints -> `android-performance` authority.
 
 Use `../AGENTS.md` as final policy authority.
+
+## Lead skill tiebreaker (multi-domain tasks)
+
+When multiple domains match, select lead by this priority:
+
+1. If exploitability or sensitive data is at risk → `android-security` (critical override)
+2. If a go/no-go or rollback decision is blocking → `android-release-engineering`
+3. If the dominant structural question is about module/layer design → `android-architecture`
+4. If the dominant runtime question is about startup/jank/ANR/memory → `android-performance`
+5. If the dominant question is about build/CI correctness → `android-gradle-build`
+6. If the dominant question is about coroutine/Flow correctness → `android-kotlin-concurrency`
+7. Otherwise → lead is the domain with the highest user-stated concern

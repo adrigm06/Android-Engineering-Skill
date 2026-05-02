@@ -122,7 +122,13 @@ When one skill escalates or hands off to another, include this payload explicitl
 - `fallback_path`: lower-risk fallback if preferred path fails
 - `minimum_extra_evidence`: minimum additional data required to finalize
 
-Use the handoff payload whenever cross-skill impacts are material; do not hand off with implicit context.
+Use the full handoff payload when ANY of the following is true:
+- The supporting skill's constraint could change or block the lead skill's recommendation
+- The `risk_class` is `High` or `Critical` for the cross-domain aspect
+- The supporting skill must validate a quantitative gate before the final answer is issued
+- Confidence is `Medium` or `Low` and cross-domain data would change it
+
+When in doubt: include the payload. Omitting it when impacts are real is the failure mode.
 
 ## Quantitative gate policy
 

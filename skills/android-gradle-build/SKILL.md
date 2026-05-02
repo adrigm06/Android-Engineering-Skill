@@ -145,20 +145,8 @@ For medium/low confidence:
 
 ## Cross-skill handoff payload
 
-When escalating to/supporting other skills, include:
-
-- `decision_domain`
-- `requesting_skill: android-gradle-build`
-- `target_skill`
-- `risk_class`
-- `confidence` (band + numeric)
-- `assumptions`
-- `hard_constraints_checked`
-- `quantitative_gates` (`pass | at-risk | fail`)
-- `blocking_conflicts`
-- `preferred_path`
-- `fallback_path`
-- `minimum_extra_evidence`
+Use the standard payload defined in `../../AGENTS.md` (section: Cross-skill handoff contract).
+Set `requesting_skill` to `android-gradle-build`.
 
 ## Output contract
 
