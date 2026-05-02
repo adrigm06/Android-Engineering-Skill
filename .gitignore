@@ -14,3 +14,8 @@ __pycache__/
 # Local temp/log files
 *.log
 *.tmp
+
+# Regression run outputs
+assets/regression/tmp-run-*/
+assets/regression/**/regression-report.json
+assets/regression/responses/P*.md
